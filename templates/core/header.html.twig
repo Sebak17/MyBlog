@@ -1,0 +1,35 @@
+<header>
+	<nav class="navbar fixed-top navbar-expand-lg scrolling-navbar navbar-dark elegant-color">
+		<div class="container">
+			
+			<a class="navbar-brand waves-effect" href="/">
+				<strong>{{ app_name }}</strong>
+			</a>
+			
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTopMenu" aria-controls="navbarTopMenu"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<div class="collapse navbar-collapse" id="navbarTopMenu">
+				
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item {{ menuActive ? 'active' : '' }}">
+						<a class="nav-link waves-effect" href="#">Strona główna
+						</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link waves-effect" href="#">Artykuły
+						</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link waves-effect" href="#">O mnie
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</header>

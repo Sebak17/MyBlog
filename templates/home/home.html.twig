@@ -1,0 +1,70 @@
+{% extends 'core/base.html.twig' %}
+
+{% block body %}
+	
+	<main class="mt-5 pt-5">
+		<div class="container">
+			
+			<section class="card" style="background-image: url('https://mdbootstrap.com/img/Photos/Others/images/78.jpg');">
+				
+				<div class="card-body text-white text-center py-5 px-5 my-5">
+					
+					<h1 class="mb-4">
+					<strong>Learn Bootstrap 4 with MDB</strong>
+					</h1>
+					<p>
+						<strong>Best & free guide of responsive web design</strong>
+					</p>
+					<p class="mb-4">
+						<strong>The most comprehensive tutorial for the Bootstrap 4. Loved by over 500 000 users. Video and written
+						versions available. Create your own, stunning website.</strong>
+					</p>
+					
+				</div>
+			</section>
+			
+			<hr class="my-5">
+			
+			<section>
+				<h2 class="h1 text-center my-5 font-weight-bold">Ostatnie artykuły</h2>
+				
+				<div class="row text-left">
+					
+					{% for i in 0..5 %}
+						
+						<div class="col-lg-6 col-md-12 mb-5">
+								<div class="card">
+									<a href="#">
+										<div class="view overlay rounded z-depth-1-half mb-3" style="cursor: pointer;">
+											<img src="https://mdbootstrap.com/img/Photos/Others/images/77.jpg" class="img-fluid" alt="Sample post image">
+												<div class="mask rgba-white-slight"></div>
+										</div>
+									</a>
+									
+									<div class="card-body">
+										<div class="news-data">
+											<a href="/tag/travels" class="light-blue-text">
+												<h6><i class="fas fa-plane"></i> <strong> Travels</strong></h6>
+											</a>
+											<p>
+												<strong>
+												<i class="fas fa-calendar-alt"></i> 20/08/2018</strong>
+											</p>
+										</div>
+										<a href="#" class="text-decoration-none">
+											<h3><strong>Title</strong></h3>
+										</a>
+										<p>
+											Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut cursus pharetra tellus. Nullam cursus et ex ut auctor. Sed facilisis tempus turpis, at varius metus faucibus ut. Cras maximus turpis molestie commodo auctor. Vivamus tempus hendrerit porttitor. Etiam ut erat consectetur, posuere est et, vulputate lorem.
+										</p>
+									</div>
+
+								</div>
+						</div>
+						
+					{% endfor %}
+				</div>
+			</section>
+		</div>
+	</main>
+{% endblock %}

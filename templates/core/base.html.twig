@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+		
+		<title>{{ app_name }}{% block nextTitle %}{% endblock %}</title>
+		
+		<link href="/assets/css/fontawesome-5.12.1.css" rel="stylesheet">
+		<link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/assets/css/mdb.min.css" rel="stylesheet">
+		<link href="/assets/css/style.css" rel="stylesheet">
+		
+		<link rel="shortcut icon" href="/assets/images/icons/favicon.ico"  type="image/x-icon">
+		
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+	</head>
+	
+	<body>
+		{% include 'core/header.html.twig' %}
+
+		{% block body %}{% endblock %}
+
+		{% include 'core/footer.html.twig' %}
+		
+
+
+		<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
+		<script type="text/javascript" src="/assets/js/popper.min.js"></script>
+		<script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/assets/js/mdb.min.js"></script>
+		{% block javascripts %}{% endblock %}
+
+	</body>
+</html>
