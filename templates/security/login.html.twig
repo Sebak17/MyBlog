@@ -1,0 +1,59 @@
+{% extends 'core/base.html.twig' %}
+
+{% block nextTitle %} - Logowanie{% endblock %}
+
+{% block body %}
+    
+    <main class="mt-5 pt-5">
+        <div class="container">
+            
+            <section>
+                <div class="row">
+                    <div class="col-12 col-md-8 offset-md-2">
+                        
+                        
+                        <div class="card mt-3">
+                            
+                            <div class="card-body">
+                                
+                                <form method="POST">
+                                    <h3 class="dark-grey-text text-center">
+                                    <strong>Logowanie</strong>
+                                    </h3>
+                                    <hr>
+                                    
+                                    {% if error %}
+                                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                        <hr>
+                                    {% endif %}
+                                    
+                                    <div class="md-form">
+                                        <i class="fas fa-user prefix grey-text"></i>
+                                        <input type="text" name="username" id="inp_username" class="form-control" value="{{ last_username }}"required>
+                                        <label for="inp_username">Podaj login</label>
+                                    </div>
+                                    <div class="md-form">
+                                        <i class="fas fa-key prefix grey-text"></i>
+                                        <input type="password" name="password" id="inp_password" class="form-control" required>
+                                        <label for="inp_password">Podaj hasło</label>
+                                    </div>
+                                    
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                    
+                                    <div class="text-center">
+                                        <button class="btn btn-indigo">Zaloguj</button>
+                                    </div>
+                                    
+                                </form>
+                                <!-- Form -->
+                                
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+{% endblock %}
