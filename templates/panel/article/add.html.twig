@@ -1,0 +1,57 @@
+{% extends 'panel/core/base.html.twig' %}
+
+{% block nextTitle %} - Panel | Dodaj artykuł{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		
+		<div class="d-sm-flex align-items-center justify-content-between mb-4">
+			<h1 class="h3 mb-0 text-gray-800">Dodawanie artykułu</h1>
+		</div>
+		
+		<div class="row">
+			<div class="col-12">
+				
+				<div class="card card-body mb-3">
+					<legend><i class="fas fa-info"></i> Informacje o produkcie</legend>
+					<hr />
+					
+					<div class="form-group">
+						<label for="inp_title">Podaj tytuł artykułu:</label>
+						<input id="inp_title" type="text" class="form-control">
+					</div>
+					
+					<div class="form-group">
+						<label for="inp_description">Krótki opis tekstu:</label>
+						<textarea id="inp_description" class="form-control" rows="3" ></textarea>
+					</div>
+				</div>
+				
+				<div class="card card-body mb-3">
+					<div class="row">
+						<div id="editorContext"></div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div class="d-none">
+		<input type="hidden" id="CSRF_TOKEN" value="{{ csrf_token('delete-item') }}"/>
+	</div>
+{% endblock %}
+
+
+{% block styles %}
+<style>
+	.ck.ck-editor  {
+		width: 100% !important;
+	}
+</style>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="/assets/js/ckeditor5/ckeditor.js"></script>
+	<script src="/assets/js/panel/article.add.js"></script>
+{% endblock %}

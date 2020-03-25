@@ -23,12 +23,21 @@ class PanelController extends AbstractController
     }
 
     /**
-     * @Route("/artykuły", name="articles")
+     * @Route("/artykuly", name="articles")
      */
     public function articles()
     {
         return $this->render('panel/articles.html.twig', []);
     }
+
+    /**
+     * @Route("/artykuly/dodaj", name="article_add")
+     */
+    public function article_add()
+    {
+        return $this->render('panel/article/add.html.twig', []);
+    }
+    
 
     /**
      * @Route("/statystyki", name="statistics")
