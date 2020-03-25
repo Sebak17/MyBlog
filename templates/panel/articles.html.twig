@@ -1,6 +1,6 @@
 {% extends 'panel/core/base.html.twig' %}
 
-{% block nextTitle %} - Panel{% endblock %}
+{% block nextTitle %} - Panel | Artykuły{% endblock %}
 
 {% block body %}
 	<div class="container-fluid">
@@ -52,6 +52,12 @@
 			</div>
 			
 			<div class="col-12 col-sm-4">
+				<div class="form-group">
+					<a href="{{ path('panel_article_add') }}">
+						<button class="btn btn-success btn-block"><i class="fas fa-plus"></i> Dodaj artykuł</button>
+					</a>
+				</div>
+
 				<div class="card card-body">
 					<legend><i class="fas fa-search"></i> Szukaj oferty</legend>
 					<hr />
