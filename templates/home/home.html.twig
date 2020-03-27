@@ -30,33 +30,31 @@
 				
 				<div class="row text-left">
 					
-					{% for i in 0..5 %}
+					{% for article in articles %}
 						
 						<div class="col-lg-6 col-md-12 mb-5">
 								<div class="card">
-									<a href="#">
+									<a href="{{ article.generateURL() }}">
 										<div class="view overlay rounded z-depth-1-half mb-3" style="cursor: pointer;">
-											<img src="https://mdbootstrap.com/img/Photos/Others/images/77.jpg" class="img-fluid" alt="Sample post image">
+											<img src="/uploads/images/{{ article.getTitleImage() }}" class="img-fluid" alt="Sample post image">
 												<div class="mask rgba-white-slight"></div>
 										</div>
 									</a>
 									
 									<div class="card-body">
 										<div class="news-data">
-											<a href="/tag/travels" class="light-blue-text">
+											<!-- <a href="/tag/travels" class="light-blue-text">
 												<h6><i class="fas fa-plane"></i> <strong> Travels</strong></h6>
-											</a>
+											</a> -->
 											<p>
 												<strong>
-												<i class="fas fa-calendar-alt"></i> 20/08/2018</strong>
+												<i class="fas fa-calendar-alt"></i> {{ article.getCreatedAt()|date('d/m/Y') }}</strong>
 											</p>
 										</div>
-										<a href="#" class="text-decoration-none">
-											<h3><strong>Title</strong></h3>
+										<a href="{{ article.generateURL() }}" class="text-decoration-none">
+											<h3><strong>{{ article.getTitle() }}</strong></h3>
 										</a>
-										<p>
-											Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut cursus pharetra tellus. Nullam cursus et ex ut auctor. Sed facilisis tempus turpis, at varius metus faucibus ut. Cras maximus turpis molestie commodo auctor. Vivamus tempus hendrerit porttitor. Etiam ut erat consectetur, posuere est et, vulputate lorem.
-										</p>
+										<p>{{ article.getDescriptionShort() }}</p>
 									</div>
 
 								</div>
