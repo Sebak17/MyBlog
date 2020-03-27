@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -27,7 +28,11 @@ class PanelController extends AbstractController
      */
     public function articles()
     {
-        return $this->render('panel/articles.html.twig', []);
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findAll();
+
+        return $this->render('panel/articles.html.twig', [
+            'articles' => $articles,
+        ]);
     }
 
     /**
@@ -36,6 +41,23 @@ class PanelController extends AbstractController
     public function article_add()
     {
         return $this->render('panel/article/add.html.twig', []);
+    }
+
+    /**
+     * @Route("/artykuly/edytuj/{id}", name="article_edit")
+     */
+    public function article_edit($id)
+    {
+        // TODO CHECK ID
+        $article = $this->getDoctrine()->getRepository(Article::class)->find($id);
+
+        if($article == null) {
+            return $this->render('panel/article/edit.html.twig', []);
+        }
+
+        return $this->render('panel/article/edit.html.twig', [
+            'article' => $article,
+        ]);
     }
     
 
