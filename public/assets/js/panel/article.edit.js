@@ -1,9 +1,12 @@
 var editor;
 
-var titleImage = '';
+var titleImage,
+    id;
 
 $(document).ready(function () {
 
+    id = $("[data-article-id]").attr("data-article-id");
+    titleImage = $("#titleImageBox").attr("src").replace("/uploads/images/", "");
     loadEditor();
 
     bindButtons();
@@ -80,7 +83,7 @@ function loadEditor() {
 }
 
 function bindButtons() {
-    $("#btnAddArticle").click(function () {
+    $("#btnEditArticle").click(function () {
         uploadArticle();
     });
 
@@ -140,6 +143,8 @@ function uploadArticle() {
     let formData = new FormData();
 
     formData.append('_token', $("#CSRF_TOKEN").val());
+
+    formData.append('id', id);
     
     formData.append('status', $("#inp_status").val());
 
@@ -151,22 +156,19 @@ function uploadArticle() {
     formData.append('text', editor.getData());
 
     $.ajax({
-        url: "/systemPanel/articleAdd",
+        url: "/systemPanel/articleEdit",
         method: "POST",
         data: formData,
         processData: false,
         contentType: false,
         success: function (data) {
             if (data.success == true) {
-                showAlert(AlertType.SUCCESS, "Artykuł został dodany pomyślnie!");
-                setTimeout(function(){
-                    window.location.href = data.url;
-                }, 500);
+                showAlert(AlertType.SUCCESS, "Artykuł został pomyślnie zapisany!");
             } else {
                 if(data.error != null)
                     showAlert(AlertType.ERROR, data.error);
                 else
-                    showAlert(AlertType.ERROR, "Błąd podczas dodawania artykułu!");
+                    showAlert(AlertType.ERROR, "Błąd podczas zapisywania artykułu!");
             }
         },
         error: function () {}

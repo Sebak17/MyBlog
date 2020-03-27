@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Table(name="images_files")
  * @ORM\Entity(repositoryClass="App\Repository\ImageFileRepository")
  */
 class ImageFile

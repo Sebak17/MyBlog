@@ -38,6 +38,11 @@ class Article
     private $description_short;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    private $text;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $created_at;
@@ -100,6 +105,18 @@ class Article
         return $this;
     }
 
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    public function setText(?string $text): self
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;
@@ -122,5 +139,22 @@ class Article
         $this->updated_at = $updated_at;
 
         return $this;
+    }
+
+
+
+
+
+    public function generateURL($onlyTitle = false) {
+
+        $t = preg_replace('/[^A-Za-z0-9 ]/', '', $this->getTitle());
+
+        $title = implode("-", array_slice(explode(' ', $t), 0, 5));
+
+        if($onlyTitle)
+            return $title;
+
+
+        return "/artykul/" . $this->getId() . "/" . $title;
     }
 }
