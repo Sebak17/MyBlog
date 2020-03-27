@@ -36,7 +36,7 @@
 										</h5>
 									</td>
 									<td>{{ article.getTitle() }}</td>
-									<td>{{ article.getStatus() }}</td>
+									<td>{{ article.getStatusName() }}</td>
 									<td>{{ article.getCreatedAt()|date('Y-m-d H:i:s') }}</td>
 									<td>
 										<a href="{{ path('panel_article_edit', {id: article.getId()}) }}">

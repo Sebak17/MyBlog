@@ -1,0 +1,4 @@
+parameters:
+  article.status:
+    VISIBLE: Widoczny
+    INVISIBLE: Niewidoczny

@@ -92,4 +92,8 @@
 	<script src="/assets/js/ckeditor5/ckeditor.js"></script>
 	<script src="/assets/js/panel/article.edit.js"></script>
 	<script src="/assets/js/panel/utils.js"></script>
+
+	<script>
+		$("#inp_status").val("{{ article.getStatus() }}");
+	</script>
 {% endblock %}

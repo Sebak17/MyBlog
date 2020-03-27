@@ -30,6 +30,12 @@ class PanelController extends AbstractController
     {
         $articles = $this->getDoctrine()->getRepository(Article::class)->findAll();
 
+        foreach ($articles as $article) {
+            $article->setStatusName( $this->getParameter('article.status')[$article->getStatus()] );
+        }
+
+        $articles = array_reverse($articles);
+
         return $this->render('panel/articles.html.twig', [
             'articles' => $articles,
         ]);

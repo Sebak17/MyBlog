@@ -143,6 +143,19 @@ class Article
 
 
 
+    private $status_name;
+
+    public function getStatusName(): ?string
+    {
+        return $this->status_name;
+    }
+
+    public function setStatusName(?string $status_name): self
+    {
+        $this->status_name = $status_name;
+
+        return $this;
+    }
 
 
     public function generateURL($onlyTitle = false) {

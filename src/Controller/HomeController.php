@@ -16,10 +16,6 @@ class HomeController extends AbstractController
 
         $articles = $this->getDoctrine()->getRepository(Article::class)->getLastArticles(6);
 
-        $test = $this->getParameter('kernel.project_dir');
-
-        echo $test;
-
         return $this->render('home/home.html.twig', [
             'menuActive' => '1',
             'articles'   => $articles,
