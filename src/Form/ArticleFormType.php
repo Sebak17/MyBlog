@@ -52,6 +52,20 @@ class ArticleFormType extends AbstractType
                 ],
             ])
 
+            ->add('tag', TextType::class, [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Podaj tag!',
+                    ]),
+                    new Length([
+                        'min'        => 5,
+                        'max'        => 20,
+                        'minMessage' => 'Minimalna długość tagu to {{ limit }}!',
+                        'maxMessage' => 'Maksymalna długość tagu to {{ limit }}!',
+                    ]),
+                ],
+            ])
+
             ->add('description_short', TextType::class, [
                 'constraints' => [
                     new NotBlank([

@@ -33,6 +33,11 @@ class Article
     private $titleImage;
 
     /**
+     * @ORM\Column(type="string", length=64)
+     */
+    private $tag;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description_short;
@@ -89,6 +94,18 @@ class Article
     public function setTitleImage(string $titleImage): self
     {
         $this->titleImage = $titleImage;
+
+        return $this;
+    }
+
+    public function getTag(): ?string
+    {
+        return $this->tag;
+    }
+
+    public function setTag(?string $tag): self
+    {
+        $this->tag = $tag;
 
         return $this;
     }

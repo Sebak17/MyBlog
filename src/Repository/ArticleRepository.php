@@ -18,33 +18,63 @@ class ArticleRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Article::class);
     }
-
-    // /**
-    //  * @return Article[] Returns an array of Article objects
-    //  */
     
     public function getLastArticles($size = 2)
     {
         return $this->createQueryBuilder('a')
             ->where('a.status = :status')
             ->setParameter('status', 'VISIBLE')
-            ->orderBy('a.created_at', 'ASC')
+            ->orderBy('a.created_at', 'DESC')
             ->setMaxResults($size)
             ->getQuery()
             ->getResult()
         ;
     }
-    
 
-    /*
-    public function findOneBySomeField($value): ?Article
-    {
+
+    public function findByTitle($title) {
+        $title = strtolower($title);
+
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
+            ->where('LOWER(a.title) LIKE :title')
+            ->setParameter('title', '%'.$title.'%')
+            ->orderBy('a.created_at', 'ASC')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
-    */
+
+    public function findByTag($tag) {
+        $tag = strtolower($tag);
+
+        return $this->createQueryBuilder('a')
+            ->where('LOWER(a.tag) LIKE :tag')
+            ->setParameter('tag', '%'.$tag.'%')
+            ->orderBy('a.created_at', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+
+
+
+
+
+
+
+    public function findByMonth() {
+        $emConfig = $this->getEntityManager()->getConfiguration();
+        $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
+        $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
+        $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
+
+        return $this->createQueryBuilder('a')
+            ->where('YEAR(a.created_at) = YEAR(CURRENT_DATE()) AND MONTH(a.created_at) = MONTH(CURRENT_DATE())')
+            ->orderBy('a.created_at', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

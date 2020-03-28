@@ -20,7 +20,14 @@ class PanelController extends AbstractController
      */
     public function main()
     {
-        return $this->render('panel/main.html.twig', []);
+        $summary = array();
+
+        $summary['articlesAll'] = count($this->getDoctrine()->getRepository(Article::class)->findAll());
+        $summary['articlesMonth'] = count($this->getDoctrine()->getRepository(Article::class)->findByMonth());
+
+        return $this->render('panel/main.html.twig', [
+            'summary' => $summary,
+        ]);
     }
 
     /**
@@ -28,17 +35,7 @@ class PanelController extends AbstractController
      */
     public function articles()
     {
-        $articles = $this->getDoctrine()->getRepository(Article::class)->findAll();
-
-        foreach ($articles as $article) {
-            $article->setStatusName( $this->getParameter('article.status')[$article->getStatus()] );
-        }
-
-        $articles = array_reverse($articles);
-
-        return $this->render('panel/articles.html.twig', [
-            'articles' => $articles,
-        ]);
+        return $this->render('panel/articles.html.twig', []);
     }
 
     /**
