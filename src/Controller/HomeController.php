@@ -13,7 +13,6 @@ class HomeController extends AbstractController
      */
     public function index()
     {
-
         $articles = $this->getDoctrine()->getRepository(Article::class)->getLastArticles(6);
 
         return $this->render('home/home.html.twig', [
@@ -21,6 +20,44 @@ class HomeController extends AbstractController
             'articles'   => $articles,
         ]);
     }
+
+    /**
+     * @Route("/tag/{tag}", name="articlesListByTag")
+     */
+    public function articlesListByTag($tag)
+    {
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findByTag($tag, false, true);
+
+        return $this->render('home/articlesListByTag.html.twig', [
+            'tag' => $tag,
+            'articles' => $articles,
+        ]);
+    }
+
+    /**
+     * @Route("/artykuly", name="articlesList")
+     */
+    public function articlesList()
+    {
+        $articles = $this->getDoctrine()->getRepository(Article::class)->getLastArticles(10);
+
+        return $this->render('home/articlesList.html.twig', [
+            'menuActive' => '2',
+            'articles' => $articles,
+        ]);
+    }
+
+
+    /**
+     * @Route("/omnie", name="aboutMe")
+     */
+    public function aboutMe()
+    {
+        return $this->render('home/aboutMe.html.twig', [
+            'menuActive' => '3',
+        ]);
+    }
+
 
     /**
      * @Route("/artykul/{id}/{title}", name="article")

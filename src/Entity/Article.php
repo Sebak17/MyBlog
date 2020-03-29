@@ -57,134 +57,137 @@ class Article
      */
     private $updated_at;
 
-    public function getId(): ?int
+    public function getId():  ? int
     {
         return $this->id;
     }
 
-    public function getStatus(): ?string
+    public function getStatus() :  ? string
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): self
+    public function setStatus(string $status) : self
     {
         $this->status = $status;
 
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getTitle():  ? string
     {
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(string $title) : self
     {
         $this->title = $title;
 
         return $this;
     }
 
-    public function getTitleImage(): ?string
+    public function getTitleImage():  ? string
     {
         return $this->titleImage;
     }
 
-    public function setTitleImage(string $titleImage): self
+    public function setTitleImage(string $titleImage) : self
     {
         $this->titleImage = $titleImage;
 
         return $this;
     }
 
-    public function getTag(): ?string
+    public function getTag():  ? string
     {
         return $this->tag;
     }
 
-    public function setTag(?string $tag): self
+    public function setTag( ? string $tag) : self
     {
         $this->tag = $tag;
 
         return $this;
     }
 
-    public function getDescriptionShort(): ?string
+    public function getDescriptionShort() :  ? string
     {
         return $this->description_short;
     }
 
-    public function setDescriptionShort(?string $description_short): self
+    public function setDescriptionShort( ? string $description_short) : self
     {
         $this->description_short = $description_short;
 
         return $this;
     }
 
-    public function getText(): ?string
+    public function getText() :  ? string
     {
         return $this->text;
     }
 
-    public function setText(?string $text): self
+    public function setText( ? string $text) : self
     {
         $this->text = $text;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt() :  ? \DateTimeInterface
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    public function setCreatedAt(\DateTimeInterface $created_at) : self
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt():  ? \DateTimeInterface
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updated_at): self
+    public function setUpdatedAt(\DateTimeInterface $updated_at) : self
     {
         $this->updated_at = $updated_at;
 
         return $this;
     }
 
-
-
     private $status_name;
 
-    public function getStatusName(): ?string
+    public function getStatusName():  ? string
     {
         return $this->status_name;
     }
 
-    public function setStatusName(?string $status_name): self
+    public function setStatusName( ? string $status_name) : self
     {
         $this->status_name = $status_name;
 
         return $this;
     }
 
-
-    public function generateURL($onlyTitle = false) {
-
+    public function generateURL($onlyTitle = false)
+    {
         $t = preg_replace('/[^A-Za-z0-9 ]/', '', $this->getTitle());
 
         $title = implode("-", array_slice(explode(' ', $t), 0, 5));
 
-        if($onlyTitle)
+        if ($onlyTitle) {
             return $title;
-
+        }
 
         return "/artykul/" . $this->getId() . "/" . $title;
     }
+
+    public function getTitleImageURL() :  ? string
+    {
+        return "/uploads/images/" . $this->titleImage;
+    }
+
 }

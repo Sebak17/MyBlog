@@ -14,18 +14,18 @@
 			<div class="collapse navbar-collapse" id="navbarTopMenu">
 				
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item">
-						<a class="nav-link waves-effect" href="#">Strona główna
+					<li class="nav-item {{ (menuActive is defined and menuActive == 1) ? 'active' }}">
+						<a class="nav-link waves-effect" href="/">Strona główna
 						</a>
 					</li>
 
-					<li class="nav-item">
-						<a class="nav-link waves-effect" href="#">Artykuły
+					<li class="nav-item {{ (menuActive is defined and menuActive == 2) ? 'active' }}">
+						<a class="nav-link waves-effect" href="/artykuly">Artykuły
 						</a>
 					</li>
 
-					<li class="nav-item">
-						<a class="nav-link waves-effect" href="#">O mnie
+					<li class="nav-item {{ (menuActive is defined and menuActive == 3) ? 'active' }}">
+						<a class="nav-link waves-effect" href="/omnie">O mnie
 						</a>
 					</li>
 				</ul>

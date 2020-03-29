@@ -18,63 +18,66 @@ class ArticleRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Article::class);
     }
-    
+
     public function getLastArticles($size = 2)
     {
         return $this->createQueryBuilder('a')
-            ->where('a.status = :status')
-            ->setParameter('status', 'VISIBLE')
-            ->orderBy('a.created_at', 'DESC')
-            ->setMaxResults($size)
-            ->getQuery()
-            ->getResult()
+                    ->where('a.status = :status')
+                    ->setParameter('status', 'VISIBLE')
+                    ->orderBy('a.created_at', 'DESC')
+                    ->setMaxResults($size)
+                    ->getQuery()
+                    ->getResult()
         ;
     }
 
-
-    public function findByTitle($title) {
+    public function findByTitle($title)
+    {
         $title = strtolower($title);
 
         return $this->createQueryBuilder('a')
-            ->where('LOWER(a.title) LIKE :title')
-            ->setParameter('title', '%'.$title.'%')
-            ->orderBy('a.created_at', 'ASC')
-            ->getQuery()
-            ->getResult()
+                    ->where('LOWER(a.title) LIKE :title')
+                    ->setParameter('title', '%' . $title . '%')
+                    ->orderBy('a.created_at', 'ASC')
+                    ->getQuery()
+                    ->getResult()
         ;
     }
 
-    public function findByTag($tag) {
+    public function findByTag($tag, $like = true, $onlyVisible = false)
+    {
         $tag = strtolower($tag);
 
-        return $this->createQueryBuilder('a')
-            ->where('LOWER(a.tag) LIKE :tag')
-            ->setParameter('tag', '%'.$tag.'%')
-            ->orderBy('a.created_at', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
+        if ($like) {
+            $tag = '%' . $tag . '%';
+        }
+
+        $query = $this->createQueryBuilder('a')
+                      ->where('LOWER(a.tag) LIKE :tag')
+                      ->setParameter('tag', $tag)
+                      ->orderBy('a.created_at', 'ASC');
+
+        if ($onlyVisible) {
+            $query->andWhere('a.status LIKE :status')
+                  ->setParameter('status', 'VISIBLE');
+        }
+
+        return $query->getQuery()->getResult();
     }
 
-
-
-
-
-
-
-
-
-    public function findByMonth() {
+    public function findByMonth()
+    {
         $emConfig = $this->getEntityManager()->getConfiguration();
         $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
         $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
         $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
 
         return $this->createQueryBuilder('a')
-            ->where('YEAR(a.created_at) = YEAR(CURRENT_DATE()) AND MONTH(a.created_at) = MONTH(CURRENT_DATE())')
-            ->orderBy('a.created_at', 'ASC')
-            ->getQuery()
-            ->getResult()
+                    ->where('YEAR(a.created_at) = YEAR(CURRENT_DATE()) AND MONTH(a.created_at) = MONTH(CURRENT_DATE())')
+                    ->orderBy('a.created_at', 'ASC')
+                    ->getQuery()
+                    ->getResult()
         ;
     }
+
 }

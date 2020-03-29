@@ -1,0 +1,46 @@
+{% extends 'core/base.html.twig' %}
+
+{% block nextTitle %} - Artkuły{% endblock %}
+{% set isFooterSticky = true %}
+
+{% block body %}
+<main class="mt-5 py-5 mb-5 mb-sm-0">
+    <div class="container mb-5 mb-sm-0">
+        <section>
+            <h2 class="h1 text-center mb-3 font-weight-bold">
+                Artykuły
+            </h2>
+            <div class="row mb-5 mb-sm-0">
+                <div class="col-12 mb-5 mb-sm-0">
+                    {% for article in articles %}
+                    <div class="card flex-column flex-sm-row mb-3">
+                        <div class="card-header border-0 text-center">
+                        	<a href="{{ article.generateURL() }}">
+                            	<img src="{{ article.getTitleImageURL }}" class="img-fluid" style="max-width: 200px; max-height: 150px;"></img>
+                        	</a>
+                        </div>
+                        <div class="card-block p-2">
+                            <h4 class="card-title">
+                            	<a href="{{ article.generateURL() }}">
+                            		{{ article.getTitle() }}
+                            	</a>
+                            </h4>
+                            <p style="font-size: 0.75rem;">
+                            	<a href="/tag/{{ article.getTag() }}">
+                            		<i class="fab fa-slack-hash"></i> <strong> {{ article.getTag() }}</strong>
+                            	</a>
+                            	| 
+                            	{{ article.getCreatedAt()|date('d/m/Y H:i:s') }}
+                            </p>
+                            <p class="card-text">
+                                {{ article.getDescriptionShort() }}
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+{% endblock %}
