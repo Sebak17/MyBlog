@@ -26,6 +26,11 @@
 					</div>
 
 					<div class="form-group">
+						<label for="inp_tag">Krótki tag:</label>
+						<input id="inp_tag" type="text" class="form-control" value="{{ article.getTag() }}">
+					</div>
+
+					<div class="form-group">
 						<label for="inp_description">Krótki opis tekstu:</label>
 						<textarea id="inp_description" class="form-control" rows="3" >{{ article.getDescriptionShort() }}</textarea>
 					</div>

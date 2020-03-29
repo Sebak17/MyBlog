@@ -94,6 +94,7 @@ function bindButtons() {
 
 function isFormValid() {
     let title = $("#inp_title").val();
+    let tag = $("#inp_tag").val();
     let description = $("#inp_description").val();
 
     let status = $("#inp_status").val();
@@ -144,6 +145,7 @@ function uploadArticle() {
     formData.append('status', $("#inp_status").val());
 
     formData.append('title', $("#inp_title").val());
+    formData.append('tag', $("#inp_tag").val());
     formData.append('description_short', $("#inp_description").val());
 
     formData.append('titleImage', titleImage);
