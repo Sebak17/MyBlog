@@ -19,7 +19,7 @@ class ImageUploadFormType extends AbstractType
 
                 'constraints' => [
                     new File([
-                        'maxSize' => '1024k',
+                        'maxSize' => '2048k',
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/png',
