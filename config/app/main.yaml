@@ -2,3 +2,4 @@ parameters:
   article.status:
     VISIBLE: Widoczny
     INVISIBLE: Niewidoczny
+  storage: '%kernel.project_dir%/storage/'

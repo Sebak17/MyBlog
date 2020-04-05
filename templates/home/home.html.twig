@@ -5,19 +5,18 @@
 	<main class="mt-5 pt-5">
 		<div class="container">
 			
-			<section class="card" style="background-image: url('https://mdbootstrap.com/img/Photos/Others/images/78.jpg');">
+			<section class="card" style="background-image: url('{{ siteInfo['imgURL'] }}'); background-repeat: no-repeat; background-position: center;">
 				
 				<div class="card-body text-white text-center py-5 px-5 my-5">
 					
 					<h1 class="mb-4">
-					<strong>Learn Bootstrap 4 with MDB</strong>
+					<strong class="main-shadow">{{ siteInfo['title'] }}</strong>
 					</h1>
 					<p>
-						<strong>Best & free guide of responsive web design</strong>
+						<strong class="main-shadow">{{ siteInfo['subtitle'] }}</strong>
 					</p>
 					<p class="mb-4">
-						<strong>The most comprehensive tutorial for the Bootstrap 4. Loved by over 500 000 users. Video and written
-						versions available. Create your own, stunning website.</strong>
+						<strong class="main-shadow">{{ siteInfo['text'] }}</strong>
 					</p>
 					
 				</div>

@@ -1,0 +1,64 @@
+{% extends 'panel/core/base.html.twig' %}
+
+{% block nextTitle %} - Panel | Ustawienia{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		
+		<div class="d-sm-flex align-items-center justify-content-between mb-4">
+			<h1 class="h3 mb-0 text-gray-800">Ustawienia - Informacje</h1>
+		</div>
+		
+		<div class="row">
+			<div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+				<div class="card card-body mb-3 text-right">
+					<div class="alert d-none text-center" id="alert"></div>
+					
+					<div class="form-group">
+						<button class="btn btn-primary" id="btnSave"><i class="fas fa-save"></i> Zapisz</button>
+					</div>
+				</div>
+				<div class="card card-body">
+
+					<div class="form-group">
+						<label for="inp_title">Podaj tytuł:</label>
+						<input type="text" id="inp_title" class="form-control" value="{{ siteInfo['title'] }}">
+					</div>
+
+					<div class="form-group">
+						<label for="inp_subtitle">Podaj pod tytuł:</label>
+						<input type="text" id="inp_subtitle" class="form-control" value="{{ siteInfo['subtitle'] }}">
+					</div>
+
+					<div class="form-group">
+						<label for="inp_text">Podaj pod tytuł:</label>
+						<textarea name="" id="inp_text" rows="4" class="form-control">{{ siteInfo['text'] }}</textarea>
+					</div>
+
+					<div class="form-group">
+						<div class="custom-file">
+							<label for="input_bgImage" class="custom-file-label">Zdjęcie w tle:</label>
+							<input type="file" class="custom-file-input" id="input_bgImage">
+						</div>
+					</div>
+					<div class="form-group text-center">
+						<h6>Aktualne zdjęcie:</h6>
+						<img id="bgImageBox" src="{{ siteInfo['imgURL'] }}" class="img-thumbnail" style="max-width: 400px; max-height: 200px;">
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+	<div class="d-none">
+		<input type="hidden" id="CSRF_TOKEN" value="{{ csrf_token('siteInfoUpdate') }}"/>
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+	<script src="/assets/js/panel/utils.js"></script>
+	<script src="/assets/js/panel/settings.info.js"></script>
+{% endblock %}

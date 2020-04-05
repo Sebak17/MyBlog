@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Article;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Filesystem\Filesystem;
 
 class HomeController extends AbstractController
 {
@@ -13,11 +14,19 @@ class HomeController extends AbstractController
      */
     public function index()
     {
+        $links_context = file_get_contents($this->getParameter('storage') . 'links.json');
+        $linksList = json_decode($links_context, true);
+
+
+        $siteInfo = json_decode(file_get_contents($this->getParameter('storage') . 'site_info.json'), true);
+
         $articles = $this->getDoctrine()->getRepository(Article::class)->getLastArticles(6);
 
         return $this->render('home/home.html.twig', [
             'menuActive' => '1',
+            'siteInfo' => $siteInfo,
             'articles'   => $articles,
+            'linksList' => $linksList,
         ]);
     }
 
@@ -26,11 +35,15 @@ class HomeController extends AbstractController
      */
     public function articlesListByTag($tag)
     {
+        $links_context = file_get_contents($this->getParameter('storage') . 'links.json');
+        $linksList = json_decode($links_context, true);
+
         $articles = $this->getDoctrine()->getRepository(Article::class)->findByTag($tag, false, true);
 
         return $this->render('home/articlesListByTag.html.twig', [
             'tag' => $tag,
             'articles' => $articles,
+            'linksList' => $linksList,
         ]);
     }
 
@@ -39,11 +52,15 @@ class HomeController extends AbstractController
      */
     public function articlesList()
     {
+        $links_context = file_get_contents($this->getParameter('storage') . 'links.json');
+        $linksList = json_decode($links_context, true);
+
         $articles = $this->getDoctrine()->getRepository(Article::class)->getLastArticles(10);
 
         return $this->render('home/articlesList.html.twig', [
             'menuActive' => '2',
             'articles' => $articles,
+            'linksList' => $linksList,
         ]);
     }
 
@@ -53,18 +70,24 @@ class HomeController extends AbstractController
      */
     public function aboutMe()
     {
+        $links_context = file_get_contents($this->getParameter('storage') . 'links.json');
+        $linksList = json_decode($links_context, true);
+
+        $aboutMeText = file_get_contents($this->getParameter('storage') . 'about_me.data');
+
         return $this->render('home/aboutMe.html.twig', [
             'menuActive' => '3',
+            'aboutMeText' => $aboutMeText,
+            'linksList' => $linksList,
         ]);
     }
 
 
     /**
-     * @Route("/artykul/{id}/{title}", name="article")
+     * @Route("/artykul/{id}/{title}", name="article", requirements={"id"="[0-9]"})
      */
     public function article($id, $title)
     {
-        // TODO CHECK ID
 
         $article = $this->getDoctrine()->getRepository(Article::class)->find($id);
 
@@ -80,8 +103,12 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        $links_context = file_get_contents($this->getParameter('storage') . 'links.json');
+        $linksList = json_decode($links_context, true);
+
         return $this->render('home/article.html.twig', [
             'article' => $article,
+            'linksList' => $linksList,
         ]);
     }
 

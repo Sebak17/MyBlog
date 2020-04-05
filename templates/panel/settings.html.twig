@@ -10,7 +10,41 @@
 		</div>
 		
 		<div class="row">
-			
+			<div class="col-12 col-sm-6 col-md-4">
+				<div class="card card-body mb-3">
+					<legend><i class="fas fa-info"></i> Informacje na stronie głównej</legend>
+					<hr>
+
+					<div class="form-group text-right">
+						<a href="{{ path('panel_settings_info') }}">
+							<button class="btn btn-success">Edytuj <i class="fas fa-edit"></i></button>
+						</a>
+					</div>
+				</div>
+
+				<div class="card card-body">
+					<legend><i class="fas fa-info"></i> O mnie</legend>
+					<hr>
+
+					<div class="form-group text-right">
+						<a href="{{ path('panel_settings_aboutme') }}">
+							<button class="btn btn-success">Edytuj <i class="fas fa-edit"></i></button>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-12 col-sm-6 col-md-4">
+				<div class="card card-body mb-3">
+					<legend><i class="fas fa-info"></i> Linki</legend>
+					<hr>
+
+					<div class="form-group text-right">
+						<a href="{{ path('panel_settings_links') }}">
+							<button class="btn btn-success">Edytuj <i class="fas fa-edit"></i></button>
+						</a>
+					</div>
+				</div>
+			</div>
 		</div>
 		
 	</div>

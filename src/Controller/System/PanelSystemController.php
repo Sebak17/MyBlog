@@ -6,12 +6,14 @@ use App\Entity\Article;
 use App\Form\ArticleFormType;
 use App\Form\ImageUploadFormType;
 use App\Form\PanelArticlesListType;
+use App\Form\SiteInfoUpdateType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @Route("/systemPanel", name="systemPanel_")
@@ -130,7 +132,12 @@ class PanelSystemController extends AbstractController
 
         }
 
-        $response['error']['message'] = "Błąd podczas dodawania zdjęcia!";
+        if (count($form->getErrors(true)) > 0) {
+            $response['error']['message']  = $form->getErrors(true)->current()->getMessage();
+        } else {
+            $response['error']['message'] = "Błąd podczas dodawania zdjęcia!";
+        }
+
 
         return new JsonResponse($response);
     }
@@ -232,6 +239,122 @@ class PanelSystemController extends AbstractController
         }
 
         $response['success'] = false;
+        return new JsonResponse($response);
+    }
+
+
+    /**
+     * @Route("/aboutMeUpdate", name="aboutMeUpdate", methods={"POST"})
+     */
+    public function aboutMeUpdate(Request $request, SluggerInterface $slugger)
+    {
+        $response = array();
+
+        if (!$this->isCsrfTokenValid('aboutMeUpdate', $request->request->get('_token'))) {
+
+            $response['error'] = "The CSRF token is invalid. Please try to refresh page.";
+
+            $response['success'] = false;
+            return new JsonResponse($response);
+        }
+
+        $filesystem = new Filesystem();
+
+        $filesystem->dumpFile($this->getParameter('storage') . 'about_me.data', $request->request->get('text'));
+
+
+        $response['success'] = true;
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @Route("/siteInfoUpdate", name="siteInfoUpdate", methods={"POST"})
+     */
+    public function siteInfoUpdate(Request $request, SluggerInterface $slugger)
+    {
+        $response = array();
+
+        if (!$this->isCsrfTokenValid('siteInfoUpdate', $request->request->get('_token'))) {
+
+            $response['error'] = "The CSRF token is invalid. Please try to refresh page.";
+
+            $response['success'] = false;
+            return new JsonResponse($response);
+        }
+
+        $form = $this->createForm(SiteInfoUpdateType::class);
+        $form->submit($request->request->all());
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $siteInfo = array();
+
+            $siteInfo['imgURL'] = $request->request->get('bgImage');
+
+            $siteInfo['title'] = $request->request->get('title');
+            $siteInfo['subtitle'] = $request->request->get('subtitle');
+
+            $siteInfo['text'] = $request->request->get('text');
+
+            $filesystem = new Filesystem();
+            $filesystem->dumpFile($this->getParameter('storage') . 'site_info.json', json_encode($siteInfo, JSON_PRETTY_PRINT));
+
+            $response['success'] = true;
+            return new JsonResponse($response);
+        }
+
+        if (count($form->getErrors(true)) > 0) {
+            $response['error'] = $form->getErrors(true)->current()->getMessage();
+        } else {
+            $response['error'] = "Wystąpił błąd podczas zapisywania!";
+        }
+
+
+        $response['success'] = false;
+        return new JsonResponse($response);
+    }
+
+
+    /**
+     * @Route("/linksListUpdate", name="linksListUpdate", methods={"POST"})
+     */
+    public function linksListUpdate(Request $request, SluggerInterface $slugger)
+    {
+        $response = array();
+
+        if (!$this->isCsrfTokenValid('linksListUpdate', $request->request->get('_token'))) {
+
+            $response['error'] = "The CSRF token is invalid. Please try to refresh page.";
+
+            $response['success'] = false;
+            return new JsonResponse($response);
+        }
+
+        $linksList = array();
+
+        $items = $request->request->get('items');
+
+        if($items == null || gettype($items) != 'array') {
+            $response['success'] = false;
+            return new JsonResponse($response);
+        }
+
+        foreach($items as $item) {
+            $item = json_decode($item, true);
+
+            $obj = array();
+            $obj['id'] = $item['id'];
+            $obj['icon'] = $item['icon'];
+            $obj['url'] = $item['url'];
+
+
+            array_push($linksList, $obj);
+        }
+
+        $filesystem = new Filesystem();
+        $filesystem->dumpFile($this->getParameter('storage') . 'links.json', json_encode($linksList, JSON_PRETTY_PRINT));
+
+        $response['success'] = true;
         return new JsonResponse($response);
     }
 

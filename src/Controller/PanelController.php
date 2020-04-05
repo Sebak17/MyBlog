@@ -6,6 +6,7 @@ use App\Entity\Article;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
 * @Route("/panel", name="panel_")
@@ -79,5 +80,42 @@ class PanelController extends AbstractController
     public function settings()
     {
         return $this->render('panel/settings.html.twig', []);
+    }
+
+    /**
+     * @Route("/ustawienia/informacje", name="settings_info")
+     */
+    public function settings_info()
+    {
+        $siteInfo = json_decode(file_get_contents($this->getParameter('storage') . 'site_info.json'), true);
+
+        return $this->render('panel/settings/info.html.twig', [
+            'siteInfo' => $siteInfo,
+        ]);
+    }
+
+    /**
+     * @Route("/ustawienia/omnie", name="settings_aboutme")
+     */
+    public function settings_aboutme()
+    {
+        $aboutMeText = file_get_contents($this->getParameter('storage') . 'about_me.data');
+
+        return $this->render('panel/settings/aboutme.html.twig', [
+            'aboutMeText' => $aboutMeText,
+        ]);
+    }
+
+    /**
+     * @Route("/ustawienia/linki", name="settings_links")
+     */
+    public function settings_links()
+    {
+        $links_context = file_get_contents($this->getParameter('storage') . 'links.json');
+        $linksList = json_decode($links_context, true);
+
+        return $this->render('panel/settings/links.html.twig', [
+            'linksList' => $linksList,
+        ]);
     }
 }
