@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Service\ViewCounterService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Filesystem\Filesystem;
@@ -86,7 +87,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/artykul/{id}/{title}", name="article", requirements={"id"="[0-9]"})
      */
-    public function article($id, $title)
+    public function article($id, $title, ViewCounterService $viewCounterService)
     {
 
         $article = $this->getDoctrine()->getRepository(Article::class)->find($id);
@@ -102,6 +103,8 @@ class HomeController extends AbstractController
         if ($article->getStatus() != 'VISIBLE') {
             return $this->redirectToRoute('home');
         }
+
+        $viewCounterService->addViewToArticle($article);
 
         $links_context = file_get_contents($this->getParameter('storage') . 'links.json');
         $linksList = json_decode($links_context, true);

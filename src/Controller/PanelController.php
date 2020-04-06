@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\ViewCounter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -26,8 +27,15 @@ class PanelController extends AbstractController
         $summary['articlesAll'] = count($this->getDoctrine()->getRepository(Article::class)->findAll());
         $summary['articlesMonth'] = count($this->getDoctrine()->getRepository(Article::class)->findByMonth());
 
+        $summary['viewsAll'] = count($this->getDoctrine()->getRepository(ViewCounter::class)->findAll());
+        $summary['viewsMonth'] = count($this->getDoctrine()->getRepository(ViewCounter::class)->findByMonth());
+
+
+        $viewsPerMonth = $this->getDoctrine()->getRepository(ViewCounter::class)->getViewsPerMonth();
+
         return $this->render('panel/main.html.twig', [
             'summary' => $summary,
+            'viewsPerMonth' => $viewsPerMonth,
         ]);
     }
 

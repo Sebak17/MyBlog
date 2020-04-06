@@ -70,7 +70,6 @@ class ArticleRepository extends ServiceEntityRepository
         $emConfig = $this->getEntityManager()->getConfiguration();
         $emConfig->addCustomDatetimeFunction('YEAR', 'DoctrineExtensions\Query\Mysql\Year');
         $emConfig->addCustomDatetimeFunction('MONTH', 'DoctrineExtensions\Query\Mysql\Month');
-        $emConfig->addCustomDatetimeFunction('DAY', 'DoctrineExtensions\Query\Mysql\Day');
 
         return $this->createQueryBuilder('a')
                     ->where('YEAR(a.created_at) = YEAR(CURRENT_DATE()) AND MONTH(a.created_at) = MONTH(CURRENT_DATE())')

@@ -14,6 +14,7 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+
         if ($this->getUser()) {
             return $this->redirectToRoute('panel_main');
         }
@@ -23,7 +24,14 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        $links_context = file_get_contents($this->getParameter('storage') . 'links.json');
+        $linksList     = json_decode($links_context, true);
+
+        return $this->render('security/login.html.twig', [
+            'last_username' => $lastUsername, 
+            'error' => $error,
+            'linksList' => $linksList,
+        ]);
     }
 
     /**
@@ -31,6 +39,7 @@ class SecurityController extends AbstractController
      */
     public function logout()
     {
-         return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('app_login');
     }
+
 }

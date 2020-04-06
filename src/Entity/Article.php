@@ -57,6 +57,11 @@ class Article
      */
     private $updated_at;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ViewCounter", mappedBy="article")
+     */
+    protected $viewCounters;
+
     public function getId():  ? int
     {
         return $this->id;
@@ -188,6 +193,11 @@ class Article
     public function getTitleImageURL() :  ? string
     {
         return "/uploads/images/" . $this->titleImage;
+    }
+
+    public function getViewCounters()
+    {
+        return $this->viewCounters;
     }
 
 }
