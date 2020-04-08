@@ -58,8 +58,11 @@ function loadArticles() {
 							<td>` + item.tag + `</td>
 							<td>` + item.createdAt + `</td>
 							<td>
+                                <a href="` + item.statsURL + `">
+                                    <button class="btn btn-info btn-sm w-100 mb-2"><i class="fas fa-chart-bar"></i> Statystyki</button>
+                                </a>
 								<a href="` + item.editURL + `">
-									<button class="btn btn-success btn-sm"><i class="fas fa-edit"></i> Edytuj</button>
+									<button class="btn btn-success btn-sm w-100"><i class="fas fa-edit"></i> Edytuj</button>
 								</a>
 							</td>
 						</tr>

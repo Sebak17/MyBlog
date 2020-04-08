@@ -40,4 +40,12 @@ class ViewCounterService
 
     }
 
+    public function getViewsPerMonthByArticle(Article $article) 
+    {
+        $data = $this->entityManager->getRepository(ViewCounter::class)->getViewsPerMonthByArticle($article->getId());
+
+
+        return $data;
+    }
+
 }

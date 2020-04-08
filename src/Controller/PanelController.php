@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\ViewCounter;
+use App\Service\ViewCounterService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -64,11 +65,32 @@ class PanelController extends AbstractController
         $article = $this->getDoctrine()->getRepository(Article::class)->find($id);
 
         if($article == null) {
-            return $this->render('panel/article/edit.html.twig', []);
+            return $this->redirectToRoute('panel_articles');
         }
 
         return $this->render('panel/article/edit.html.twig', [
             'article' => $article,
+        ]);
+    }
+
+    /**
+     * @Route("/artykuly/statystyki/{id}", name="article_stats")
+     */
+    public function article_stats($id, ViewCounterService $viewCounterService)
+    {
+        $article = $this->getDoctrine()->getRepository(Article::class)->find($id);
+
+        if($article == null) {
+            return $this->redirectToRoute('panel_articles');
+        }
+
+        $viewsPerMonth = $viewCounterService->getViewsPerMonthByArticle($article);
+
+        $article->setStatusName($this->getParameter('article.status')[$article->getStatus()]);
+
+        return $this->render('panel/article/stats.html.twig', [
+            'article' => $article,
+            'viewsPerMonth' => $viewsPerMonth,
         ]);
     }
     

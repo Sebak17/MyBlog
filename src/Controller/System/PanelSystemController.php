@@ -71,6 +71,7 @@ class PanelSystemController extends AbstractController
                 $art['statusName'] = $this->getParameter('article.status')[$article->getStatus()];
                 $art['tag'] = $article->getTag();
                 $art['createdAt']  = $article->getCreatedAt()->format('Y-m-d H:i:s');
+                $art['statsURL']    = $this->generateUrl('panel_article_stats', ['id' => $article->getId()]);
                 $art['editURL']    = $this->generateUrl('panel_article_edit', ['id' => $article->getId()]);
 
                 array_push($response['articles'], $art);

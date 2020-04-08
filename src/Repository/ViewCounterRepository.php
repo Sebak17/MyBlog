@@ -48,8 +48,7 @@ class ViewCounterRepository extends ServiceEntityRepository
         ;
     }
 
-    public function getViewsPerMonth(
-)    {
+    public function getViewsPerMonth()    {
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = 'SELECT MONTH(view_counter.date) as month, COUNT(view_counter.id) as amount  FROM view_counter WHERE YEAR(view_counter.date) = YEAR(CURRENT_DATE()) GROUP BY YEAR(view_counter.date), MONTH(view_counter.date)';
@@ -66,8 +65,25 @@ class ViewCounterRepository extends ServiceEntityRepository
             $result[$row['month']] = $row['amount'];
         }
 
-        
+        return $result;
+    }
 
+    public function getViewsPerMonthByArticle($article_id)    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT MONTH(view_counter.date) as month, COUNT(view_counter.id) as amount  FROM view_counter WHERE YEAR(view_counter.date) = YEAR(CURRENT_DATE()) AND view_counter.article_id = :article_id GROUP BY YEAR(view_counter.date), MONTH(view_counter.date)';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['article_id' => $article_id]);
+
+        $result = array();
+
+        for($i = 1 ; $i <= 12 ; $i++) {
+            $result[$i] = 0;
+        }
+
+        while ($row = $stmt->fetch()) {
+            $result[$row['month']] = $row['amount'];
+        }
 
         return $result;
     }
