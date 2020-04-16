@@ -35,6 +35,7 @@ function saveItems() {
         processData: false,
         success: function (data) {
             if (data.success == true) {
+
                 showAlert(AlertType.SUCCESS, "Zapisano pomyślnie!");
             } else {
                 showAlert(AlertType.ERROR, "Błąd podczas zapisywania!");
@@ -104,8 +105,11 @@ function addItem() {
 	};
 
 	items.push(obj);
+	$("#inp_icon").val("");
+	$("#inp_url").val("");
 
 	showItems();
+	alertApplyChanges();
 }
 
 function removeItem(id) {
@@ -126,6 +130,7 @@ function removeItem(id) {
 	items = arrayRemove(items, obj);
 
 	showItems();
+	alertApplyChanges();
 }
 
 function getItemByID(id) {
@@ -135,4 +140,8 @@ function getItemByID(id) {
 			result = item;
 	});
 	return result;
+}
+
+function alertApplyChanges() {
+	showAlert(AlertType.INFO, "Zostały wykryte zmiany! Zapisz je!", '#alertInfo');
 }

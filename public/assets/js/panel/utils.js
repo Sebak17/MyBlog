@@ -3,6 +3,7 @@ var AlertType = {
     SUCCESS: 1,
     ERROR: 2,
     WARNING: 3,
+    INFO: 4,
     LOADING: 9,
 };
 
@@ -14,6 +15,7 @@ function showAlert(type, text = '', id = '', useIcon = true) {
     $(id).removeClass('alert-success');
     $(id).removeClass('alert-warning');
     $(id).removeClass('alert-danger');
+    $(id).removeClass('alert-info');
 
     if (type != -1)
         $(id).removeClass('d-none');
@@ -40,6 +42,12 @@ function showAlert(type, text = '', id = '', useIcon = true) {
                 text = String.raw `` + text;
             $(id).html(text);
             $(id).addClass('alert-warning');
+            break;
+        case 4:
+            if (useIcon)
+                text = String.raw `` + text;
+            $(id).html(text);
+            $(id).addClass('alert-info');
             break;
 
         case 9:
