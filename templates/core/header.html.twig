@@ -29,6 +29,16 @@
 						</a>
 					</li>
 				</ul>
+                    <ul class="navbar-nav nav-flex-icons">
+                        {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a href="{{ path('panel_main') }}" class="nav-link border border-light rounded waves-effect"
+                                target="_blank">
+                                <i class="fas fa-solar-panel mr-2"></i>Panel administracyjny
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
 			</div>
 		</div>
 	</nav>
