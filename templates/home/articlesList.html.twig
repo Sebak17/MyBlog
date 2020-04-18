@@ -31,6 +31,7 @@
                             	</a>
                             	| 
                             	{{ article.getCreatedAt()|date('d/m/Y H:i:s') }}
+                                {{ ( article.getAuthor() != null ? "| <strong>" ~ article.getAuthor() ~ "</strong>")|raw }}
                             </p>
                             <p class="card-text">
                                 {{ article.getDescriptionShort() }}

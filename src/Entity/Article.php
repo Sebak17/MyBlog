@@ -22,6 +22,11 @@ class Article
      */
     private $status;
 
+     /**
+     * @ORM\Column(type="string", length=200, nullable=true)
+     */
+    private $author;
+
     /**
      * @ORM\Column(type="string", length=200)
      */
@@ -75,6 +80,18 @@ class Article
     public function setStatus(string $status) : self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getAuthor() :  ? string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(string $author) : self
+    {
+        $this->author = $author;
 
         return $this;
     }

@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Choice;
+use Symfony\Component\Validator\Constraints\Type;
 
 class ArticleFormType extends AbstractType
 {
@@ -23,6 +24,21 @@ class ArticleFormType extends AbstractType
                         'message' => 'Podaj status!',
                     ]),
                     new Choice(['VISIBLE', 'INVISIBLE']),
+                ],
+            ])
+
+            ->add('author', TextType::class, [
+                'constraints' => [
+                    new Length([
+                        'min'        => 2,
+                        'max'        => 100,
+                        'minMessage' => 'Minimalna nazwa autora to {{ limit }}!',
+                        'maxMessage' => 'Maksymalna nazwa autora to {{ limit }}!',
+                    ]),
+                    new Type([
+                        'type' => ['alnum'],
+                        'message' => "Autor może posiadać tylko litery i liczby!"
+                    ])
                 ],
             ])
 

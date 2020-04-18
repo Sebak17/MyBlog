@@ -144,6 +144,8 @@ function uploadArticle() {
     
     formData.append('status', $("#inp_status").val());
 
+    formData.append('author', $("#inp_author").val());
+
     formData.append('title', $("#inp_title").val());
     formData.append('tag', $("#inp_tag").val());
     formData.append('description_short', $("#inp_description").val());
