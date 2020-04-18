@@ -346,6 +346,7 @@ class PanelSystemController extends AbstractController
             $obj = array();
             $obj['id'] = $item['id'];
             $obj['icon'] = $item['icon'];
+            $obj['title'] = $item['title'];
             $obj['url'] = $item['url'];
 
 

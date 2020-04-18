@@ -3,7 +3,7 @@
 	
 	<div class="pb-4">
 		{% for link in linksList %}
-			<a href="{{ link['url'] }}" target="_blank">
+			<a href="{{ link['url'] }}" target="_blank" data-toggle="tooltip" title="{{ link['title'] }}">
 				<i class="{{ link['icon'] }} mx-1"></i>
 			</a>
 		{% endfor %}
