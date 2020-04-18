@@ -27,11 +27,11 @@
 			<section>
 				<h2 class="h1 text-center my-5 font-weight-bold">Ostatnie artykuły</h2>
 				
-				<div class="row text-left">
+				<div class="row text-left" id="articlesList">
 					
 					{% for article in articles %}
 						
-						<div class="col-lg-6 col-md-12 d-flex align-items-stretch mb-5">
+						<div class="col-lg-6 col-md-12 mb-5 grid-item">
 								<div class="card">
 									<a href="{{ article.generateURL() }}">
 										<div class="view overlay rounded z-depth-1-half mb-3" style="cursor: pointer;">
@@ -64,4 +64,11 @@
 			</section>
 		</div>
 	</main>
+
+	<script src="https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"></script>
+	<script charset="UTF-8">
+		var msnry = new Masonry( '#articlesList', {
+		  itemSelector: '.grid-item'
+		});
+	</script>
 {% endblock %}
