@@ -19,7 +19,14 @@
 						</div>
 						
 						<div class="row text-right">
-						<div class="col"><p style="font-size: 0.75rem; margin-top: -10px;">{{ article.getCreatedAt()|date('d/m/Y H:i:s') }}</p></div>
+							<div class="col text-left">
+								{% if(article.getAuthor() != null) %}
+									<p>Autor: <strong>{{ article.getAuthor() }}</strong></p>
+								{% endif %}
+							</div>
+							<div class="col">
+								<p style="font-size: 0.75rem; margin-top: 0px;">{{ article.getCreatedAt()|date('d/m/Y H:i:s') }}</p>
+							</div>
 							
 						</div>
 						
@@ -42,7 +49,7 @@
 				{% if is_granted('ROLE_ADMIN') %}
 				<div class="row mt-3">
 					<div class="col-12 text-right">
-                            <a href="{{ path('panel_main') }}" class="nav-link border border-light rounded waves-effect"target="_blank">
+                            <a href="{{ path('panel_article_edit', {id: article.getId()}) }}" class="nav-link border border-light rounded waves-effect"target="_blank">
                                 <i class="fas fa-edit mr-2"></i> Edytuj post
                             </a>
 					</div>
