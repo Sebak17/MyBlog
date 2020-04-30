@@ -1,0 +1,82 @@
+{% extends 'panel/core/base.html.twig' %}
+
+{% block nextTitle %} - Panel | Ustawienia{% endblock %}
+
+{% block body %}
+	<div class="container-fluid">
+		
+		<div class="d-sm-flex align-items-center justify-content-between mb-4">
+			<h1 class="h3 mb-0 text-gray-800">Ustawienia - Linki</h1>
+		</div>
+		
+		<div class="row">
+			<div class="col-12 col-md-10 offset-md-1 col-xl-8 offset-xl-2">
+				<div class="row">
+					<div class="col-12 col-md-6 mb-3">
+						<div class="card card-body">
+							<h4><i class="fas fa-id-card"></i> Zmiana loginu</h4>
+							<hr>
+							
+							<div class="alert d-none" id="alert01"></div>
+							
+							<div class="form-group">
+								<label for="inp_login">Podaj nowy login:</label>
+								<input type="text" id="inp_login" class="form-control" value="">
+							</div>
+
+							<div class="form-group">
+								<label for="inp_password">Podaj hasło:</label>
+								<input type="password" id="inp_password" class="form-control" value="">
+							</div>
+							
+							<div class="form-group text-right">
+								<button class="btn btn-primary" id="btnChangeLogin"><i class="fas fa-exchange-alt"></i> Zmień</button>
+							</div>
+							
+						</div>
+					</div>
+					<div class="col-12 col-md-6 mb-3">
+						<div class="card card-body">
+							<h4><i class="fas fa-key"></i> Zmiana hasła</h4>
+							<hr>
+							
+							<div class="alert d-none" id="alert02"></div>
+
+
+							<div class="form-group">
+								<label for="inp_password_old">Podaj stare hasło:</label>
+								<input type="password" id="inp_password_old" class="form-control" value="">
+							</div>
+
+							<div class="form-group">
+								<label for="inp_password_new1">Podaj nowe hasło:</label>
+								<input type="password" id="inp_password_new1" class="form-control" value="">
+							</div>
+
+							<div class="form-group">
+								<label for="inp_password_new2">Powtórz nowe hasło:</label>
+								<input type="password" id="inp_password_new2" class="form-control" value="">
+							</div>
+
+							<div class="form-group text-right">
+								<button class="btn btn-primary" id="btnChangePass"><i class="fas fa-exchange-alt"></i> Zmień</button>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div class="d-none">
+		<input type="hidden" id="CSRF_TOKEN" value="{{ csrf_token('accountAuthUpdate') }}"/>
+	</div>
+	
+{% endblock %}
+
+{% block javascripts %}
+	<script src="/assets/js/panel/utils.js"></script>
+	<script src="/assets/js/panel/settings.account.js"></script>
+{% endblock %}

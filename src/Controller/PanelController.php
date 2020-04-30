@@ -148,4 +148,13 @@ class PanelController extends AbstractController
             'linksList' => $linksList,
         ]);
     }
+
+    /**
+     * @Route("/ustawienia/konto", name="settings_account")
+     */
+    public function settings_account()
+    {
+
+        return $this->render('panel/settings/account.html.twig', []);
+    }
 }

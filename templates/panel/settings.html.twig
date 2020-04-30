@@ -11,7 +11,7 @@
 		
 		<div class="row">
 			<div class="col-12 col-sm-6 col-md-4">
-				<div class="card card-body mb-3">
+				<div class="card card-body text-white bg-secondary mb-3">
 					<legend><i class="fas fa-info"></i> Informacje na stronie głównej</legend>
 					<hr>
 
@@ -22,7 +22,7 @@
 					</div>
 				</div>
 
-				<div class="card card-body">
+				<div class="card card-body text-white bg-secondary">
 					<legend><i class="fas fa-info"></i> O mnie</legend>
 					<hr>
 
@@ -34,12 +34,25 @@
 				</div>
 			</div>
 			<div class="col-12 col-sm-6 col-md-4">
-				<div class="card card-body mb-3">
+				<div class="card card-body text-white bg-primary mb-3">
 					<legend><i class="fas fa-info"></i> Linki</legend>
 					<hr>
 
 					<div class="form-group text-right">
 						<a href="{{ path('panel_settings_links') }}">
+							<button class="btn btn-success">Edytuj <i class="fas fa-edit"></i></button>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-12 col-sm-6 col-md-4">
+				<div class="card card-body text-white bg-info mb-3">
+					<legend><i class="fas fa-key"></i> Zmiana danych logowania</legend>
+					<hr>
+
+					<div class="form-group text-right">
+						<a href="{{ path('panel_settings_account') }}">
 							<button class="btn btn-success">Edytuj <i class="fas fa-edit"></i></button>
 						</a>
 					</div>

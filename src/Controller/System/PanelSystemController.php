@@ -7,6 +7,8 @@ use App\Form\ArticleFormType;
 use App\Form\ImageUploadFormType;
 use App\Form\PanelArticlesListType;
 use App\Form\SiteInfoUpdateType;
+use App\Form\UserChangeLoginFormType;
+use App\Form\UserChangePasswordFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/systemPanel", name="systemPanel_")
@@ -357,6 +360,99 @@ class PanelSystemController extends AbstractController
         $filesystem->dumpFile($this->getParameter('storage') . 'links.json', json_encode($linksList, JSON_PRETTY_PRINT));
 
         $response['success'] = true;
+        return new JsonResponse($response);
+    }
+
+
+    /**
+     * @Route("/changeLogin", name="changeLogin", methods={"POST"})
+     */
+    public function changeLogin(Request $request, SluggerInterface $slugger)
+    {
+        $response = array();
+
+        if (!$this->isCsrfTokenValid('accountAuthUpdate', $request->request->get('_token'))) {
+
+            $response['error'] = "The CSRF token is invalid. Please try to refresh page.";
+
+            $response['success'] = false;
+            return new JsonResponse($response);
+        }
+
+        $form = $this->createForm(UserChangeLoginFormType::class);
+        $form->submit($request->request->all());
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user = $this->getUser();
+
+            if($request->request->get('login') == $user->getUsername()) {
+                $response['error'] = "Nowy login musi być inny!";
+                $response['success'] = false;
+                return new JsonResponse($response);
+            }
+
+            $user->setUsername($request->request->get('login'));
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->merge($user);
+            $entityManager->flush();
+
+            $this->get('security.token_storage')->setToken(null);
+
+            $response['success'] = true;
+            return new JsonResponse($response);
+        }
+
+        if (count($form->getErrors(true)) > 0) {
+            $response['error'] = $form->getErrors(true)->current()->getMessage();
+        }
+
+        $response['success'] = false;
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @Route("/changePassword", name="changePassword", methods={"POST"})
+     */
+    public function changePassword(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $response = array();
+
+        if (!$this->isCsrfTokenValid('accountAuthUpdate', $request->request->get('_token'))) {
+
+            $response['error'] = "The CSRF token is invalid. Please try to refresh page.";
+
+            $response['success'] = false;
+            return new JsonResponse($response);
+        }
+
+        $form = $this->createForm(UserChangePasswordFormType::class);
+        $form->submit($request->request->all());
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $user = $this->getUser();
+
+            $passwordEncoded = $passwordEncoder->encodePassword($user, $request->request->get('password_new'));
+
+            $user->setPassword($passwordEncoded);
+
+            $this->get('security.token_storage')->setToken(null);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->merge($user);
+            $entityManager->flush();
+
+            $response['success'] = true;
+            return new JsonResponse($response);
+        }
+
+        if (count($form->getErrors(true)) > 0) {
+            $response['error'] = $form->getErrors(true)->current()->getMessage();
+        }
+
+        $response['success'] = false;
         return new JsonResponse($response);
     }
 
